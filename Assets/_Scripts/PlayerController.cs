@@ -20,6 +20,11 @@ public class PlayerController : MonoBehaviour
 	//public GameController.PlayerNum playerNum = GameController.PlayerNum.P1;
 	// Events
 	public event System.Action deathEvent;
+	// Scene Information
+	public bool isGrounded;
+	public GameObject groundRayOriginGameObject;
+	public float groundRayDist;
+	private Vector2 _groundRayOrigin;
 
 	void Start()
 	{
@@ -43,6 +48,18 @@ public class PlayerController : MonoBehaviour
 
 		//Debug.DrawLine(Vector3.zero, axisInputDirectionMovement);
 		//Debug.DrawLine(Vector3.zero, axisInputDirectionThrow);
+
+		// Cast Ray to see if we're grounded
+		_groundRayOrigin = new Vector2(groundRayOriginGameObject.transform.position.x, groundRayOriginGameObject.transform.position.y);
+        Debug.DrawLine(_groundRayOrigin, _groundRayOrigin + (groundRayDist * Vector2.down), Color.red);
+		RaycastHit2D ray = Physics2D.Raycast(_groundRayOrigin, Vector2.down, groundRayDist);
+		if (ray) //&& ray.collider.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+		} else
+		{
+			isGrounded = false;
+		}
 	}
 
 

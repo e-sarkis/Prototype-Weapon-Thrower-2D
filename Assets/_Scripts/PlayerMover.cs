@@ -38,7 +38,7 @@ public class PlayerMover : MonoBehaviour
 			}
 		}
 		// Movement Jumping
-		if (_playerController.inputJumpDown && _rb2d.velocity.y == 0)
+		if (_playerController.inputJumpDown && _playerController.isGrounded)
 		{
 			_rb2d.AddForce(new Vector2(0, jumpForce));
 			if (moveEvent != null)
