@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
 		{
 			deathEvent();
 		}
+		Destroy(this);
 	}
 
 	/// <summary>
