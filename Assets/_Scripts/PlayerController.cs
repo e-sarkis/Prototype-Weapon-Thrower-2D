@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour
 {
 	// Inputs
 	[HideInInspector] public bool inputJump			= false;
-	[HideInInspector] public bool inputJumpHeld		= false;
+	[HideInInspector] public bool inputJumpDown		= false;
+	[HideInInspector] public bool inputJumpReleased	= false;
 	[HideInInspector] public bool inputParry		= false;
 	[HideInInspector] public Vector2 axisInputDirectionMovement;
 	[HideInInspector] public Vector2 axisInputDirectionThrow;
@@ -30,8 +31,10 @@ public class PlayerController : MonoBehaviour
 	{
 		timeSinceParry += Time.deltaTime;
 
-		inputJump 	= Input.GetButton(joyStr + "Jump");
-		inputParry	= Input.GetButton(joyStr + "Parry");
+		inputJump 			= Input.GetButton(joyStr + "Jump");
+		inputJumpDown 		= Input.GetButtonDown(joyStr + "Jump");
+		inputJumpReleased 	= Input.GetButtonUp(joyStr + "Jump");
+		inputParry			= Input.GetButton(joyStr + "Parry");
 
 		axisInputDirectionMovement = new Vector2(Input.GetAxisRaw(joyStr + "LStickHorizontal"), Input.GetAxisRaw(joyStr + "LStickVertical"));
 		axisInputDirectionMovement.Normalize();
