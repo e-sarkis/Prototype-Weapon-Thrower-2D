@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour 
 {
+	// Inputs
 	[HideInInspector] public bool inputJump			= false;
 	[HideInInspector] public bool inputJumpHeld		= false;
 	[HideInInspector] public bool inputParry		= false;
 	[HideInInspector] public Vector2 axisInputDirectionMovement;
 	[HideInInspector] public Vector2 axisInputDirectionThrow;
-
+	// Timers & Cooldowns
 	public float parryCooldown;	// Time between Parry use and reset
 	[HideInInspector] public float timeSinceParry;
-
+	// Joystick Information
 	[HideInInspector] public string joyStr;
 	//public GameController.Joystick joy = GameController.Joystick.Joy1;
 	//public GameController.PlayerNum playerNum = GameController.PlayerNum.P1;
+	// Events
+	public event System.Action deathEvent;
 
 	void Start()
 	{
@@ -39,6 +42,22 @@ public class PlayerController : MonoBehaviour
 		//Debug.DrawLine(Vector3.zero, axisInputDirectionThrow);
 	}
 
+
+	/// <summary>
+	/// Called when the player is killed
+	/// </summary>
+	void Die()
+	{
+		if (deathEvent != null)
+		{
+			deathEvent();
+		}
+	}
+
+	/// <summary>
+	/// Return the Joystick String Prepend for use in InputAxis
+	/// </summary>
+	/// <returns>String Joystick Prepend</returns>
 	public string GetJoyString()
 	{
 		return joyStr;
