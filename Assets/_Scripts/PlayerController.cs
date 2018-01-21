@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 	//public GameController.PlayerNum playerNum = GameController.PlayerNum.P1;
 	// Events
 	public event System.Action deathEvent;
+	public event System.Action parryEvent;
 	// Scene Information
 	public bool isGrounded;
 	public GameObject groundRayOriginGameObject;
@@ -45,7 +46,6 @@ public class PlayerController : MonoBehaviour
 		axisInputDirectionMovement.Normalize();
 		axisInputDirectionThrow = new Vector2(Input.GetAxisRaw(joyStr + "RStickHorizontal"), Input.GetAxisRaw(joyStr + "RStickVertical"));
 		axisInputDirectionThrow.Normalize();
-
 		//Debug.DrawLine(Vector3.zero, axisInputDirectionMovement);
 		//Debug.DrawLine(Vector3.zero, axisInputDirectionThrow);
 
@@ -60,6 +60,12 @@ public class PlayerController : MonoBehaviour
 		{
 			isGrounded = false;
 		}
+
+		// Perform Parry attempt
+		if (inputParry)
+		{
+			AttemptParry();
+		}
 	}
 
 
@@ -71,6 +77,18 @@ public class PlayerController : MonoBehaviour
 		if (deathEvent != null)
 		{
 			deathEvent();
+		}
+		Destroy(this);
+	}
+
+	/// <summary>
+	/// Called when Player attempts Parry
+	/// </summary>
+	void AttemptParry()
+	{
+		if (parryEvent != null)
+		{
+			parryEvent();
 		}
 		Destroy(this);
 	}

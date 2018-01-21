@@ -33,9 +33,13 @@ public class SpriteAnimator : MonoBehaviour
 			idsToSprites.Add(sprMap.ID, sprMap.sprite);
 		}
 
-		FindObjectOfType<PlayerMover>().moveEvent += OnMove;
-		FindObjectOfType<PlayerMover>().moveDirectionEvent += OnMove;
-		FindObjectOfType<PlayerMover>().stopEvent += OnStop;
+		PlayerMover parentPlayerMover = GetComponentInParent<PlayerMover>();
+		if (parentPlayerMover)
+		{
+			parentPlayerMover.moveEvent += OnMove;
+			parentPlayerMover.moveDirectionEvent += OnMove;
+			parentPlayerMover.stopEvent += OnStop;
+		}
 	}
 
 	/// <summary>
