@@ -34,6 +34,7 @@ public class SpriteAnimator : MonoBehaviour
 		}
 
 		FindObjectOfType<PlayerMover>().moveEvent += OnMove;
+		FindObjectOfType<PlayerMover>().moveDirectionEvent += OnMove;
 		FindObjectOfType<PlayerMover>().stopEvent += OnStop;
 	}
 
@@ -58,6 +59,22 @@ public class SpriteAnimator : MonoBehaviour
 	private void OnMove()
 	{
 		changeSprite(SpriteAnimations.Move);
+	}
+
+	/// <summary>
+	/// Change to Move Sprite and Correct Direction
+	/// </summary>
+	private void OnMove(float direction)
+	{
+		changeSprite(SpriteAnimations.Move);
+		if (direction < 0)
+		{
+			_spriteRenderer.flipX = true;
+		} else if (direction > 0)
+		{
+			_spriteRenderer.flipX = false;
+		}
+		
 	}
 
 	/// <summary>

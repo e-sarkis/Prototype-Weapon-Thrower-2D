@@ -8,6 +8,7 @@ public class PlayerMover : MonoBehaviour
 	public float jumpForce = 100.0f;
 
 	public event System.Action moveEvent;
+	public event System.Action<float> moveDirectionEvent;
 	public event System.Action stopEvent;
 	
 
@@ -27,7 +28,7 @@ public class PlayerMover : MonoBehaviour
 			_rb2d.velocity = new Vector2(moveSpeed * _playerController.axisInputDirectionMovement.x, _rb2d.velocity.y);
 			if (moveEvent != null)
 			{
-				moveEvent();
+				moveDirectionEvent(_playerController.axisInputDirectionMovement.x);
 			}
 		} else
 		{
