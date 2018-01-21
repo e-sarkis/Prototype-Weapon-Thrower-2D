@@ -36,9 +36,14 @@ public class SpriteAnimator : MonoBehaviour
 		PlayerMover parentPlayerMover = GetComponentInParent<PlayerMover>();
 		if (parentPlayerMover)
 		{
-			parentPlayerMover.moveEvent += OnMove;
-			parentPlayerMover.moveDirectionEvent += OnMove;
-			parentPlayerMover.stopEvent += OnStop;
+			parentPlayerMover.moveEvent 			+= OnMove;
+			parentPlayerMover.moveDirectionEvent 	+= OnMove;
+			parentPlayerMover.stopEvent 			+= OnStop;
+		}
+		PlayerController parentPlayerController = GetComponentInParent<PlayerController>();
+		if (parentPlayerController)
+		{
+			parentPlayerController.attackEvent		+= OnAttack;
 		}
 	}
 
@@ -78,7 +83,14 @@ public class SpriteAnimator : MonoBehaviour
 		{
 			_spriteRenderer.flipX = false;
 		}
-		
+	}
+
+	/// <summary>
+	/// Change to Attack Sprite
+	/// </summary>
+	private void OnAttack()
+	{
+		changeSprite(SpriteAnimations.Attack);
 	}
 
 	/// <summary>
@@ -86,6 +98,9 @@ public class SpriteAnimator : MonoBehaviour
 	/// </summary>
 	private void OnStop()
 	{
-		changeSprite(SpriteAnimations.Idle);
+		if (_spriteRenderer.sprite != idsToSprites[SpriteAnimations.Attack])
+		{
+			changeSprite(SpriteAnimations.Idle);
+		}
 	}
 }

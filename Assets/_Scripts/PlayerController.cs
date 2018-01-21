@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector] public bool inputJumpDown		= false;
 	[HideInInspector] public bool inputJumpReleased	= false;
 	[HideInInspector] public bool inputParry		= false;
+	[HideInInspector] public bool inputAttack		= false;
 	[HideInInspector] public Vector2 axisInputDirectionMovement;
 	[HideInInspector] public Vector2 axisInputDirectionThrow;
 	// Timers & Cooldowns
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
 	// Events
 	public event System.Action deathEvent;
 	public event System.Action parryEvent;
+	public event System.Action attackEvent;
 	// Scene Information
 	public bool isGrounded;
 	public GameObject groundRayOriginGameObject;
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
 		inputJumpDown 		= Input.GetButtonDown(joyStr + "Jump");
 		inputJumpReleased 	= Input.GetButtonUp(joyStr + "Jump");
 		inputParry			= Input.GetButton(joyStr + "Parry");
+		inputAttack			= Input.GetButton(joyStr + "Attack");
 
 		axisInputDirectionMovement = new Vector2(Input.GetAxisRaw(joyStr + "LStickHorizontal"), Input.GetAxisRaw(joyStr + "LStickVertical"));
 		axisInputDirectionMovement.Normalize();
@@ -66,6 +69,12 @@ public class PlayerController : MonoBehaviour
 		{
 			AttemptParry();
 		}
+
+		// Perform Attack attempt
+		if (inputAttack)
+		{
+			AttemptAttack();
+		}
 	}
 
 
@@ -90,7 +99,17 @@ public class PlayerController : MonoBehaviour
 		{
 			parryEvent();
 		}
-		Destroy(this);
+	}
+
+	/// <summary>
+	/// Called when Player attempts Attack
+	/// </summary>
+	void AttemptAttack()
+	{
+		if (attackEvent != null)
+		{
+			attackEvent();
+		}
 	}
 
 	/// <summary>
