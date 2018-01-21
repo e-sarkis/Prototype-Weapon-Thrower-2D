@@ -24,7 +24,7 @@ public class SpriteAnimator : MonoBehaviour
 
 	private SpriteRenderer _spriteRenderer;
 
-	void Awake()
+	void Start()
 	{
 		_spriteRenderer = GetComponent<SpriteRenderer>();
 		// Populate dictionary
@@ -32,6 +32,9 @@ public class SpriteAnimator : MonoBehaviour
 		{
 			idsToSprites.Add(sprMap.ID, sprMap.sprite);
 		}
+
+		FindObjectOfType<PlayerMover>().moveEvent += OnMove;
+		FindObjectOfType<PlayerMover>().stopEvent += OnStop;
 	}
 
 	/// <summary>
@@ -47,5 +50,21 @@ public class SpriteAnimator : MonoBehaviour
 		{
 			Debug.Log("Sprite with ID " + ID.ToString() + " could not be found!");
 		}
+	}
+
+	/// <summary>
+	/// Change to Move Sprite
+	/// </summary>
+	private void OnMove()
+	{
+		changeSprite(SpriteAnimations.Move);
+	}
+
+	/// <summary>
+	/// Change to Idle Sprite
+	/// </summary>
+	private void OnStop()
+	{
+		changeSprite(SpriteAnimations.Idle);
 	}
 }
