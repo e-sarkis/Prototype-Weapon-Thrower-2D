@@ -42,10 +42,12 @@ public class Parry : MonoBehaviour
 		// Attempt to Parry
 		_spriteRenderer.color = _initialColor;
 		parentPlayerController.timeSinceParryStart = 0;
+		_parryActive = true;
 	}
 
 	void OnParryEnd()
 	{
 		_spriteRenderer.color = _invisibleColor;
+		_parryActive = false;
 	}
 }
