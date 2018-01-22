@@ -14,7 +14,9 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector] public Vector2 axisInputDirectionThrow;
 	// Timers & Cooldowns
 	public float parryCooldown;	// Time between Parry use and reset
+	public float parryLength;	// Length of Parry use
 	[HideInInspector] public float timeSinceParry;
+	[HideInInspector] public float timeSinceParryStart;
 	// Joystick Information
 	[HideInInspector] public string joyStr;
 	//public GameController.Joystick joy = GameController.Joystick.Joy1;
@@ -22,6 +24,7 @@ public class PlayerController : MonoBehaviour
 	// Events
 	public event System.Action deathEvent;
 	public event System.Action parryEvent;
+	public event System.Action parryEndEvent;
 	public event System.Action attackEvent;
 	// Scene Information
 	public bool isGrounded;
@@ -33,11 +36,17 @@ public class PlayerController : MonoBehaviour
 	{
 		joyStr = "Joy1";
 		//joyStr = GameController.Instance.GetJoystickInputString(joy);
+
+		timeSinceParry = parryCooldown;
+		timeSinceParryStart = 0f;
 	}
 
 	void Update()
 	{
 		timeSinceParry += Time.deltaTime;
+		Debug.Log("Time since parry " + timeSinceParry);
+		Debug.Log("Time since parryStart " + timeSinceParryStart);
+		
 
 		inputJump 			= Input.GetButton(joyStr + "Jump");
 		inputJumpDown 		= Input.GetButtonDown(joyStr + "Jump");
@@ -45,7 +54,8 @@ public class PlayerController : MonoBehaviour
 		inputParry			= Input.GetButton(joyStr + "Parry");
 		inputAttack			= Input.GetButton(joyStr + "Attack");
 
-		axisInputDirectionMovement = new Vector2(Input.GetAxisRaw(joyStr + "LStickHorizontal"), Input.GetAxisRaw(joyStr + "LStickVertical"));
+		//axisInputDirectionMovement = new Vector2(Input.GetAxisRaw(joyStr + "LStickHorizontal"), Input.GetAxisRaw(joyStr + "LStickVertical"));
+		axisInputDirectionMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 		axisInputDirectionMovement.Normalize();
 		axisInputDirectionThrow = new Vector2(Input.GetAxisRaw(joyStr + "RStickHorizontal"), Input.GetAxisRaw(joyStr + "RStickVertical"));
 		axisInputDirectionThrow.Normalize();
@@ -56,7 +66,7 @@ public class PlayerController : MonoBehaviour
 		_groundRayOrigin = new Vector2(groundRayOriginGameObject.transform.position.x, groundRayOriginGameObject.transform.position.y);
         Debug.DrawLine(_groundRayOrigin, _groundRayOrigin + (groundRayDist * Vector2.down), Color.red);
 		RaycastHit2D ray = Physics2D.Raycast(_groundRayOrigin, Vector2.down, groundRayDist);
-		if (ray) //&& ray.collider.gameObject.tag == "Ground")
+		if (ray)
         {
             isGrounded = true;
 		} else
@@ -95,9 +105,10 @@ public class PlayerController : MonoBehaviour
 	/// </summary>
 	void AttemptParry()
 	{
-		if (parryEvent != null)
+		if (parryEvent != null && timeSinceParry >= parryCooldown)
 		{
 			parryEvent();
+			timeSinceParry = 0f;
 		}
 	}
 
