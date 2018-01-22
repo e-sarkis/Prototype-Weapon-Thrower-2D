@@ -43,11 +43,8 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
-		timeSinceParry += Time.deltaTime;
-		//Debug.Log("Time since parry " + timeSinceParry);
-		//Debug.Log("Time since parryStart " + timeSinceParryStart);
+		timeSinceParry += Time.deltaTime;		
 		
-
 		inputJump 			= Input.GetButton(joyStr + "Jump");
 		inputJumpDown 		= Input.GetButtonDown(joyStr + "Jump");
 		inputJumpReleased 	= Input.GetButtonUp(joyStr + "Jump");
