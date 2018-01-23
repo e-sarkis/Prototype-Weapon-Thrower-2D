@@ -72,7 +72,8 @@ public class Weapon : MonoBehaviour
 				ParryResponse(other.gameObject);
 			} else
 			{
-				Destroy(other.gameObject.transform.parent.gameObject);
+				PlayerController pc = other.gameObject.GetComponentInParent<PlayerController>();
+				Debug.Log("DEAD");
 			}
 			
 		}	
@@ -85,9 +86,15 @@ public class Weapon : MonoBehaviour
 		_rb2d.simulated = false;
 		Physics2D.IgnoreCollision(_c2d, _friendlyC2d, false);
 		Physics2D.IgnoreCollision(_friendlyC2d, _c2d, false);
-		_friendlyC2d = other.gameObject.GetComponent<Collider2D>();
-		Physics2D.IgnoreCollision(_c2d, _friendlyC2d, true);
-		Physics2D.IgnoreCollision(_friendlyC2d, _c2d, true);
+		foreach (Collider2D c in other.gameObject.transform.parent.GetComponentsInChildren<Collider2D>())
+		{
+			if (c.gameObject.tag == "DamageHitbox")
+			{
+				_friendlyC2d = other.gameObject.GetComponent<Collider2D>();
+				Physics2D.IgnoreCollision(_c2d, _friendlyC2d, true);
+				Physics2D.IgnoreCollision(_friendlyC2d, _c2d, true);
+			}
+		}
 		_isHeld = true;
 	}
 
