@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector] public bool inputJumpReleased	= false;
 	[HideInInspector] public bool inputParry		= false;
 	[HideInInspector] public bool inputAttack		= false;
+	[HideInInspector] public bool inputCancel		= false;
 	[HideInInspector] public Vector2 axisInputDirectionMovement;
 	[HideInInspector] public Vector2 axisInputDirectionThrow;
 	// Timers & Cooldowns
