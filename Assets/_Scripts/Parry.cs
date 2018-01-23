@@ -50,4 +50,9 @@ public class Parry : MonoBehaviour
 		_spriteRenderer.color = _invisibleColor;
 		_parryActive = false;
 	}
+
+	public bool GetParryActive()
+	{
+		return _parryActive;
+	}
 }

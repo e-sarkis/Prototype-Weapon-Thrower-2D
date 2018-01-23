@@ -103,4 +103,20 @@ public class SpriteAnimator : MonoBehaviour
 			changeSprite(SpriteAnimations.Idle);
 		}
 	}
+
+	public bool IsFacingRight()
+	{
+		return !_spriteRenderer.flipX;
+	}
+
+	public int GetDirectionFaced()
+	{
+		if (_spriteRenderer.flipX)
+		{
+			return -1;
+		} else
+		{
+			return 1;
+		}
+	}
 }
