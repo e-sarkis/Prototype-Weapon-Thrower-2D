@@ -90,7 +90,14 @@ public class Weapon : MonoBehaviour
 		Physics2D.IgnoreCollision(_c2d, _friendlyC2d, false);
 		Physics2D.IgnoreCollision(_friendlyC2d, _c2d, false);
 
-		Collider2D[] colliders = other.gameObject.transform.parent.GetComponentsInChildren<Collider2D>();
+		Collider2D[] colliders;
+		if (other.gameObject.transform.parent != null)
+		{
+			colliders = other.gameObject.transform.parent.GetComponentsInChildren<Collider2D>();
+		} else
+		{
+			colliders = other.gameObject.GetComponentsInChildren<Collider2D>();
+		}
 
 		foreach (Collider2D c in colliders)
 		{
