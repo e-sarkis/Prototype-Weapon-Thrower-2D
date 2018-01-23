@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Weapon : MonoBehaviour 
 {
@@ -74,6 +75,8 @@ public class Weapon : MonoBehaviour
 			{
 				PlayerController pc = other.gameObject.GetComponentInParent<PlayerController>();
 				Debug.Log("DEAD");
+				// Temporary Round End
+				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 			}
 			
 		}	
