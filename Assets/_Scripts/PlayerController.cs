@@ -51,8 +51,8 @@ public class PlayerController : MonoBehaviour
 		inputParry			= Input.GetButton(joyStr + "Parry");
 		inputAttack			= Input.GetButton(joyStr + "Attack");
 
-		//axisInputDirectionMovement = new Vector2(Input.GetAxisRaw(joyStr + "LStickHorizontal"), Input.GetAxisRaw(joyStr + "LStickVertical"));
-		axisInputDirectionMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+		axisInputDirectionMovement = new Vector2(Input.GetAxisRaw(joyStr + "LStickHorizontal"), Input.GetAxisRaw(joyStr + "LStickVertical"));
+		//axisInputDirectionMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 		axisInputDirectionMovement.Normalize();
 		axisInputDirectionThrow = new Vector2(Input.GetAxisRaw(joyStr + "RStickHorizontal"), Input.GetAxisRaw(joyStr + "RStickVertical"));
 		axisInputDirectionThrow.Normalize();

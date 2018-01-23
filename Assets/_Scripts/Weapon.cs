@@ -41,7 +41,7 @@ public class Weapon : MonoBehaviour
 		if (other.gameObject.tag == "Parry")
 		{
 			Parry otherParry = other.gameObject.GetComponent<Parry>();
-			if (otherParry && otherParry.GetParryActive())
+			if ((otherParry && otherParry.GetParryActive()) || IsSafe())
 			{
 				ParryResponse(other.gameObject);
 			}
@@ -53,7 +53,7 @@ public class Weapon : MonoBehaviour
 		if (other.gameObject.tag == "Parry")
 		{
 			Parry otherParry = other.gameObject.GetComponent<Parry>();
-			if (otherParry && otherParry.GetParryActive())
+			if ((otherParry && otherParry.GetParryActive()) || IsSafe())
 			{
 				ParryResponse(other.gameObject);
 			}
@@ -64,7 +64,7 @@ public class Weapon : MonoBehaviour
 	{
 		if (other.gameObject.tag == "Player")
 		{
-			if (_rb2d.velocity.x <= nonLethalSpeed && _rb2d.velocity.y <= nonLethalSpeed)
+			if (IsSafe())
 			{
 				ParryResponse(other.gameObject);
 			} else if (other.collider == _friendlyC2d)
@@ -86,11 +86,14 @@ public class Weapon : MonoBehaviour
 		_rb2d.simulated = false;
 		Physics2D.IgnoreCollision(_c2d, _friendlyC2d, false);
 		Physics2D.IgnoreCollision(_friendlyC2d, _c2d, false);
-		foreach (Collider2D c in other.gameObject.transform.parent.GetComponentsInChildren<Collider2D>())
+
+		Collider2D[] colliders = other.gameObject.transform.parent.GetComponentsInChildren<Collider2D>();
+
+		foreach (Collider2D c in colliders)
 		{
 			if (c.gameObject.tag == "DamageHitbox")
 			{
-				_friendlyC2d = other.gameObject.GetComponent<Collider2D>();
+				_friendlyC2d = c.gameObject.GetComponent<Collider2D>();
 				Physics2D.IgnoreCollision(_c2d, _friendlyC2d, true);
 				Physics2D.IgnoreCollision(_friendlyC2d, _c2d, true);
 			}
@@ -118,5 +121,10 @@ public class Weapon : MonoBehaviour
 				transform.parent = null;
 			}	
 		}
+	}
+
+	bool IsSafe()
+	{
+		return (_rb2d.velocity.x <= nonLethalSpeed && _rb2d.velocity.y <= nonLethalSpeed);
 	}
 }
