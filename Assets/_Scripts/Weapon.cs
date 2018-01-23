@@ -128,6 +128,6 @@ public class Weapon : MonoBehaviour
 
 	bool IsSafe()
 	{
-		return (_rb2d.velocity.x <= nonLethalSpeed && _rb2d.velocity.y <= nonLethalSpeed);
+		return ( Mathf.Abs(_rb2d.velocity.x) <= nonLethalSpeed && Mathf.Abs(_rb2d.velocity.y) <= nonLethalSpeed);
 	}
 }

@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector] public float timeSinceParry;
 	[HideInInspector] public float timeSinceParryStart;
 	// Joystick Information
-	[HideInInspector] public string joyStr;
+	public string joyStr;
 	//public GameController.Joystick joy = GameController.Joystick.Joy1;
 	//public GameController.PlayerNum playerNum = GameController.PlayerNum.P1;
 	// Events
@@ -34,8 +34,7 @@ public class PlayerController : MonoBehaviour
 
 	void Start()
 	{
-		joyStr = "Joy1";
-		//joyStr = GameController.Instance.GetJoystickInputString(joy);
+		joyStr = GetJoyString();
 
 		timeSinceParry = parryCooldown;
 		timeSinceParryStart = 0f;
